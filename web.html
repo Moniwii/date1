@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>El Destino Decide</title>
+<style>
+  :root {
+    --primary: #ff4e50;
+    --secondary: #ff9a9e;
+    --light-bg: rgba(255, 255, 255, 0.9);
+    --text-color: #333;
+  }
+
+  body {
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    background: linear-gradient(135deg, var(--secondary), #fad0c4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    padding: 20px;
+    animation: gradientMove 8s ease infinite alternate;
+  }
+
+  @keyframes gradientMove {
+    0% { background-position: left; }
+    100% { background-position: right; }
+  }
+
+  .container {
+    text-align: center;
+    background: var(--light-bg);
+    padding: 40px 30px;
+    border-radius: 25px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    max-width: 420px;
+    width: 100%;
+    animation: fadeIn 1.2s ease;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(15px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  h1 {
+    font-size: 2.2em;
+    color: var(--primary);
+    margin-bottom: 15px;
+  }
+
+  p {
+    font-size: 1.1em;
+    margin-bottom: 25px;
+    color: var(--text-color);
+  }
+
+  .buttons {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(60px, 1fr));
+    gap: 12px;
+    justify-content: center;
+  }
+
+  .number-btn {
+    background: var(--primary);
+    color: white;
+    border: none;
+    padding: 18px;
+    border-radius: 50%;
+    font-size: 1.2em;
+    cursor: pointer;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+  }
+
+  .number-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 15px rgba(0,0,0,0.25);
+  }
+
+  .number-btn:active {
+    transform: scale(0.95);
+  }
+
+  .result {
+    margin-top: 35px;
+    font-size: 1.3em;
+    color: var(--text-color);
+    min-height: 50px;
+    transition: opacity 0.4s ease;
+  }
+
+  /* Animación del texto del resultado */
+  .fade-in {
+    animation: fadeText 0.5s ease;
+  }
+
+  @keyframes fadeText {
+    from { opacity: 0; transform: scale(0.95); }
+    to { opacity: 1; transform: scale(1); }
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 480px) {
+    .container {
+      padding: 30px 20px;
+    }
+
+    h1 {
+      font-size: 1.8em;
+    }
+
+    p {
+      font-size: 1em;
+    }
+
+    .number-btn {
+      padding: 16px;
+      font-size: 1.1em;
+    }
+
+    .buttons {
+      grid-template-columns: repeat(auto-fit, minmax(55px, 1fr));
+      gap: 10px;
+    }
+  }
+</style>
+</head>
+<body>
+  <div class="container">
+    <h1>El Destino Decide</h1>
+    <p>Elige un número y descubre tu destino:</p>
+    <div class="buttons">
+      <button class="number-btn" onclick="showDestiny(1)">1</button>
+      <button class="number-btn" onclick="showDestiny(2)">2</button>
+      <button class="number-btn" onclick="showDestiny(3)">3</button>
+      <button class="number-btn" onclick="showDestiny(4)">4</button>
+      <button class="number-btn" onclick="showDestiny(5)">5</button>
+      <button class="number-btn" onclick="showDestiny(6)">6</button>
+      <button class="number-btn" onclick="showDestiny(7)">7</button>
+      <button class="number-btn" onclick="showDestiny(8)">8</button>
+    </div>
+    <div class="result" id="result"></div>
+  </div>
+
+  <script>
+    const destinies = {
+      1: "🍺 ¡Hora de una cerveza en La Bodeguilla del Bar Jamón! 3€ aprox.",
+      2: "🍦 Paseo + helado en el kiosko de la Ribera del Marisco.",
+      3: "🃏 Mini misión en el bazar: compra un juego de cartas barato.",
+      4: "🍔 Snack exprés en McDonald's, un pequeño capricho de 5€.",
+      5: "📸 Reto fotográfico en la Plaza de España, ¡la más divertida gana!",
+      6: "☕ Café en la terraza del Café de Levante, momento de charlas.",
+      7: "🥂 La terraza del misterio: pedid bebida y haced predicciones locas.",
+      8: "🌇 Atardecer en el Muelle del Vaporcito, final romántico y tranquilo."
+    };
+
+    function showDestiny(number) {
+      const resultDiv = document.getElementById('result');
+      resultDiv.classList.remove('fade-in');
+      void resultDiv.offsetWidth; // reinicia animación
+      resultDiv.innerHTML = destinies[number];
+      resultDiv.classList.add('fade-in');
+    }
+  </script>
+</body>
+</html>
