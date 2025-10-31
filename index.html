@@ -31,21 +31,22 @@
     height: 100%;
     pointer-events: none;
     z-index: 0;
+    overflow: visible;
   }
 
   .particle {
     position: absolute;
     border-radius: 50%;
     background: rgba(255, 255, 255, 0.8);
-    animation: float 10s linear infinite;
+    animation: float 8s linear infinite;
   }
 
   @keyframes float {
-    0% { transform: translateY(100vh) scale(1); opacity: 0; }
-    25% { transform: translateY(75vh) scale(1.2); opacity: 0.7; }
-    50% { transform: translateY(50vh) scale(0.9); opacity: 1; }
-    75% { transform: translateY(25vh) scale(1.1); opacity: 0.7; }
-    100% { transform: translateY(-50px) scale(1); opacity: 0; }
+    0% { transform: translateY(0) scale(1); opacity: 0; }
+    25% { transform: translateY(-30px) scale(1.2); opacity: 0.7; }
+    50% { transform: translateY(-60px) scale(0.9); opacity: 1; }
+    75% { transform: translateY(-90px) scale(1.1); opacity: 0.7; }
+    100% { transform: translateY(-120px) scale(1); opacity: 0; }
   }
 
   /* Contenido principal */
@@ -193,16 +194,15 @@
 
   <script>
     const destinies = {
-      1: "🍺 Te has ganado una cerveza bien fría",
-      2: "🃏 Hoy toca aventura en el bazar: compra un juego de cartas.",
-      3: "🥡 Prepárate para una deliciosa comida china.",
-      4: "🍺 Te has ganado una cerveza bien fría",
-      5: "🎄 Un paseo por el bazar en busca de decoración navideña.",
-      6: "🍦 Un helado de Da Massimo te espera.",
+      1: "🍺 Te has ganado una cerveza bien fría, ¡a disfrutarla con alegría!",
+      2: "🃏 Hoy toca aventura en el bazar: compra un juego de cartas y jugad un rato divertido.",
+      3: "🥡 Prepárate para una deliciosa comida china, perfecta para saborear momentos especiales juntos.",
+      4: "🍺 Qué bien, otra cerveza refrescante para brindar por los pequeños placeres.",
+      5: "🎄 Un paseo por el bazar buscando decoración navideña, creando recuerdos mágicos en el camino.",
+      6: "🍦 Un helado delicioso te espera, un toque dulce que alegrará el día.",
       7: "🛒 Hoy exploramos nuevos sabores: paseo al Mercadona para descubrir una cena diferente.",
-      8: "🍺 Te has ganado una cerveza bien fría"
+      8: "🍺 Para cerrar con broche de oro, una cerveza fría para brindar y relajarse."
     };
-
 
     function showDestiny(number) {
       const resultDiv = document.getElementById('result');
@@ -232,6 +232,7 @@
         const p = document.createElement('div');
         p.classList.add('particle');
         p.style.left = Math.random() * window.innerWidth + 'px';
+        p.style.top = Math.random() * window.innerHeight + 'px';
         const size = 6 + Math.random() * 10;
         p.style.width = p.style.height = size + 'px';
         p.style.animationDuration = 5 + Math.random() * 8 + 's';
