@@ -3,65 +3,109 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>El Destino Decide</title>
+<title>Cita Interactiva 1 de María Vanessa</title>
 <style>
   :root {
     --primary: #ff4e50;
     --secondary: #ff9a9e;
-    --light-bg: rgba(255, 255, 255, 0.9);
+    --light-bg: rgba(255, 255, 255, 0.85);
     --text-color: #333;
   }
 
   body {
     font-family: 'Segoe UI', system-ui, sans-serif;
     background: linear-gradient(135deg, var(--secondary), #fad0c4);
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+    position: relative;
+  }
+
+  /* Contenedor de partículas */
+  #particles-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .particle {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.8);
+    animation: float 10s linear infinite;
+  }
+
+  @keyframes float {
+    0% { transform: translateY(100vh) scale(1); opacity: 0; }
+    25% { transform: translateY(75vh) scale(1.2); opacity: 0.7; }
+    50% { transform: translateY(50vh) scale(0.9); opacity: 1; }
+    75% { transform: translateY(25vh) scale(1.1); opacity: 0.7; }
+    100% { transform: translateY(-50px) scale(1); opacity: 0; }
+  }
+
+  /* Contenido principal */
+  .section {
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
     min-height: 100vh;
-    margin: 0;
-    padding: 20px;
-    animation: gradientMove 8s ease infinite alternate;
+    padding: 40px 20px;
+    box-sizing: border-box;
+    position: relative;
+    z-index: 1; /* por encima de partículas */
   }
 
-  @keyframes gradientMove {
-    0% { background-position: left; }
-    100% { background-position: right; }
-  }
-
-  .container {
-    text-align: center;
-    background: var(--light-bg);
-    padding: 40px 30px;
-    border-radius: 25px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-    max-width: 420px;
-    width: 100%;
-    animation: fadeIn 1.2s ease;
-  }
-
-  @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(15px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  h1 {
-    font-size: 2.2em;
+  .title {
+    font-size: 2.5em;
     color: var(--primary);
-    margin-bottom: 15px;
+    text-align: center;
+    opacity: 0;
+    transform: translateX(-100vw);
+    animation: slideIn 1s forwards 0.3s;
   }
 
-  p {
+  @keyframes slideIn {
+    to { opacity: 1; transform: translateX(0); }
+  }
+
+  .rules {
+    max-width: 500px;
+    background: var(--light-bg);
+    border-radius: 25px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+    padding: 30px 20px;
+    margin-top: 40px;
     font-size: 1.1em;
-    margin-bottom: 25px;
     color: var(--text-color);
+    opacity: 0;
+    transform: translateX(100vw);
+    transition: all 1s ease;
+  }
+
+  .rules.show {
+    opacity: 1;
+    transform: translateX(0);
   }
 
   .buttons {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(60px, 1fr));
-    gap: 12px;
-    justify-content: center;
+    gap: 15px;
+    margin-top: 40px;
+    opacity: 0;
+    transform: translateY(50px);
+    transition: all 1s ease;
+  }
+
+  .buttons.show {
+    opacity: 1;
+    transform: translateY(0);
   }
 
   .number-btn {
@@ -72,67 +116,68 @@
     border-radius: 50%;
     font-size: 1.2em;
     cursor: pointer;
-    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.3s, filter 0.3s;
   }
 
   .number-btn:hover {
-    transform: scale(1.1);
-    box-shadow: 0 6px 15px rgba(0,0,0,0.25);
+    transform: scale(1.15) rotate(-5deg);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+    background: #ff6b6b;
+    filter: drop-shadow(0 0 10px #fff);
   }
 
   .number-btn:active {
-    transform: scale(0.95);
+    transform: scale(0.95) rotate(5deg);
   }
 
   .result {
-    margin-top: 35px;
+    margin-top: 40px;
     font-size: 1.3em;
     color: var(--text-color);
     min-height: 50px;
-    transition: opacity 0.4s ease;
+    transition: opacity 0.4s ease, transform 0.4s ease;
+    position: relative;
   }
 
-  /* Animación del texto del resultado */
   .fade-in {
-    animation: fadeText 0.5s ease;
+    animation: fadeText 0.6s ease forwards;
   }
 
   @keyframes fadeText {
-    from { opacity: 0; transform: scale(0.95); }
-    to { opacity: 1; transform: scale(1); }
+    0% { opacity: 0; transform: scale(0.85) rotate(-3deg); text-shadow: 0 0 0 #fff; }
+    50% { opacity: 1; transform: scale(1.05) rotate(1deg); text-shadow: 0 0 15px #fff; }
+    100% { opacity: 1; transform: scale(1) rotate(0deg); text-shadow: 0 0 5px #fff; }
   }
 
-  /* RESPONSIVE */
   @media (max-width: 480px) {
-    .container {
-      padding: 30px 20px;
-    }
-
-    h1 {
-      font-size: 1.8em;
-    }
-
-    p {
-      font-size: 1em;
-    }
-
-    .number-btn {
-      padding: 16px;
-      font-size: 1.1em;
-    }
-
-    .buttons {
-      grid-template-columns: repeat(auto-fit, minmax(55px, 1fr));
-      gap: 10px;
-    }
+    .title { font-size: 2em; }
+    .rules { font-size: 1em; }
+    .number-btn { padding: 16px; font-size: 1.1em; }
+    .buttons { gap: 10px; }
   }
 </style>
 </head>
 <body>
-  <div class="container">
-    <h1>El Destino Decide</h1>
-    <p>Elige un número y descubre tu destino:</p>
-    <div class="buttons">
+
+  <!-- Contenedor de partículas -->
+  <div id="particles-container"></div>
+
+  <!-- Título -->
+  <section class="section" id="section-title">
+    <h1 class="title">Cita Interactiva 1 de María Vanessa</h1>
+  </section>
+
+  <!-- Reglas y botones -->
+  <section class="section" id="section-rules">
+    <div class="rules" id="rules-box">
+      ¡Bienvenida María Vanessa! 🌸<br><br>
+      Reglas del juego:<br>
+      - Elige un máximo de <strong>4 números</strong> de los 8 disponibles.<br>
+      - Cada número revela un pequeño detalle de tu cita de hoy.<br>
+      - ¡Diviértete y descubre tu destino!
+    </div>
+
+    <div class="buttons" id="buttons-box">
       <button class="number-btn" onclick="showDestiny(1)">1</button>
       <button class="number-btn" onclick="showDestiny(2)">2</button>
       <button class="number-btn" onclick="showDestiny(3)">3</button>
@@ -142,20 +187,22 @@
       <button class="number-btn" onclick="showDestiny(7)">7</button>
       <button class="number-btn" onclick="showDestiny(8)">8</button>
     </div>
+
     <div class="result" id="result"></div>
-  </div>
+  </section>
 
   <script>
     const destinies = {
-      1: "🍺 ¡Hora de una cerveza en La Bodeguilla del Bar Jamón! 3€ aprox.",
-      2: "🍦 Paseo + helado en el kiosko de la Ribera del Marisco.",
-      3: "🃏 Mini misión en el bazar: compra un juego de cartas barato.",
-      4: "🍔 Snack exprés en McDonald's, un pequeño capricho de 5€.",
-      5: "📸 Reto fotográfico en la Plaza de España, ¡la más divertida gana!",
-      6: "☕ Café en la terraza del Café de Levante, momento de charlas.",
-      7: "🥂 La terraza del misterio: pedid bebida y haced predicciones locas.",
-      8: "🌇 Atardecer en el Muelle del Vaporcito, final romántico y tranquilo."
+      1: "🍺 Te has ganado una cerveza bien fría",
+      2: "🃏 Hoy toca aventura en el bazar: compra un juego de cartas.",
+      3: "🥡 Prepárate para una deliciosa comida china.",
+      4: "🍺 Te has ganado una cerveza bien fría",
+      5: "🎄 Un paseo por el bazar en busca de decoración navideña.",
+      6: "🍦 Un helado de Da Massimo te espera.",
+      7: "🛒 Hoy exploramos nuevos sabores: paseo al Mercadona para descubrir una cena diferente.",
+      8: "🍺 Te has ganado una cerveza bien fría"
     };
+
 
     function showDestiny(number) {
       const resultDiv = document.getElementById('result');
@@ -164,6 +211,35 @@
       resultDiv.innerHTML = destinies[number];
       resultDiv.classList.add('fade-in');
     }
+
+    // Mostrar reglas y botones al hacer scroll
+    const rulesBox = document.getElementById('rules-box');
+    const buttonsBox = document.getElementById('buttons-box');
+
+    window.addEventListener('scroll', () => {
+      const triggerPoint = window.innerHeight / 2;
+      const rulesTop = rulesBox.getBoundingClientRect().top;
+      if(rulesTop < triggerPoint){
+        rulesBox.classList.add('show');
+        buttonsBox.classList.add('show');
+      }
+    });
+
+    // Crear partículas flotantes siempre visibles
+    function createParticles(num) {
+      const container = document.getElementById('particles-container');
+      for (let i = 0; i < num; i++) {
+        const p = document.createElement('div');
+        p.classList.add('particle');
+        p.style.left = Math.random() * window.innerWidth + 'px';
+        const size = 6 + Math.random() * 10;
+        p.style.width = p.style.height = size + 'px';
+        p.style.animationDuration = 5 + Math.random() * 8 + 's';
+        p.style.animationDelay = Math.random() * 5 + 's';
+        container.appendChild(p);
+      }
+    }
+    createParticles(80);
   </script>
 </body>
 </html>
